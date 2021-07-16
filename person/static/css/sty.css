@@ -1,0 +1,27 @@
+html,body{
+
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+
+}
+#bg{
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: 1380px 900px;
+    background-attachment: fixed;
+}
+} 
+#cn{
+    margin-top: 80px;
+    padding-left: 100px;
+    align-content: center;
+    align-self: center;
+
+}
+/* #inner{
+    border-color:blueviolet;
+    box-shadow: 100px;
+    align-self: center;
+} */
