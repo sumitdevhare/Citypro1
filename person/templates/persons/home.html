@@ -7,34 +7,126 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <title>Dependent Dropdown in Django</title>
+    <title>FARMER REGISTRATION FORM</title>
     <link rel="stylesheet" href="{% static "css/sty.css"%}">
  
   
 </head>
-<body id="bg" style="background-image: url('{% static "css/img/puneimg.jpg" %}'); ">
+<body id="bg" >  
+{% comment %} "background-image: url('{% static "css/img/puneimg.jpg" %}'); " {% endcomment %}
 
-<div id="cn" class="container align-items-center my-6 ">
- <div class="p-4 m-4">
+<!--sighn up content-->>
+{% block content %}
 
-    <div id="inner"class="col-lg-4 mt-4 mb-4 mx-auto border rounded my-auto border rounded  alert alert-info" role="alert">
-        <h2 class="alert alert-light border rounded mt-4 mb-4 text-info bg-dark">Select City And Taluka</h2>
-        
-    <form method="post" id="personForm" data-talukas-url="{% url 'ajax_load_talukas' %}">
-        {% csrf_token %}
-        {{ form.as_p }} <!-- renderd form as paragraph here support all the features of HTML form it is meant that all input fields will be enclosed in <p> tags.-->
-        <input class="btn btn-sm btn-info col-lg-4"  type="submit" value="Submit">
-    </form>
-    
+<div class="container-fluied" >
+ <div class="pb-4 m-4"  >
+
+    <div class="col-lg-4 mx-auto border rounded pt-8">
+        <h3 colspan="6"class="alert alert-light border rounded text-light  lg-10 bg-success">Farmer Registration</h3>
+        <form method="post" id="personForm" data-talukas-url="{% url 'ajax_load_talukas' %}"  >  
+        <form method="post" id="personForm1" data-villages-url="{% url 'ajax_load_village' %}"  >  
+
+
+
+          {% csrf_token %}
+
+
+            {% if error%}
+            <div class="alert alert-danger" role="alert">
+             
+              {{error}}
+            </div>
+            {% endif%}
+
+             <div class="form-group">
+                <label  for="">First-name</label>
+                <input type="text" name="first_name" id=""   class="form-control form-control-sm" placeholder="First Name" aria-describedby="helpId">
+                
+              </div>
+            <!--middalename-->
+            <div class="form-group">
+                <label  for="">Middal-name</label>
+                <input required type="text" name="middal_name" id=""   class="form-control form-control-sm" placeholder="Middle Name" aria-describedby="helpId">
+                
+              </div>
+               <!--last name-->
+            <div class="form-group">
+                <label for="">Last-name</label>
+                <input  required type="text" name="last_name" id=""  class="form-control form-control-sm" placeholder="Last Name" aria-describedby="helpId">
+              </div>
+                 {% comment %} <!--phone-number-->
+            <div class="form-group">
+                <label for="">Phone-Number</label>
+                <input required type="int" name="phone" id=""  class="form-control form-control-sm" placeholder="9856122489" aria-describedby="helpId">
+                
+              </div> {% endcomment %}
+              
+             <!--phone-number-->
+            <div class="row">
+              <div class="col">
+              <label for="">Phone-Number</label>
+                <input type="int" name="phone" class="form-control" placeholder="Mobile NO">
+              </div>
+              <div class="col">
+              <label for="">Addhar-Number</label>
+                <input type="int" name="addhar" class="form-control" placeholder="Addhar No">
+              </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="inputState">District Name</label>
+                  
+                    {{form.city}}
+                  </select>
+                </div>
+                 <div class="form-group col-md-4">
+                  <label for="inputState">Taluka Name</label>
+                  {{form.taluka}}
+                </div>
+                 <div class="form-group col-md-4">
+                  <label for="inputState">Village Name</label>
+                  {{form.village}}
+               
+                </div>
+              </div>
+ 
+               <div class="form-group">
+                  <label for="exampleFormControlTextarea1">Address</label>
+                  <textarea name="address" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+
+             <!--image-->
+            <div class="form-group">
+                <label  for="">Image</label>
+                <input  type="file" name="image" id=""   class=""form-control-file" form-control-sm" placeholder="Image" aria-describedby="helpId">
+                
+              </div>
+
+               <div class="form-group px-8">
+                   <input class="btn  btn-info"  type="submit" value="Save">&nbsp&nbsp&nbsp<input class="btn btn-warning" type="reset" value="Clear">
+
+               </div>
+        </form>
+    </div>
+ </div>
+
+
+
+
 </div>
-</div>
-</div>
+
+
+{% endblock %}
+
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script> // id_city ftech id_city from model ,if we selsct any city with respect to that .change(annanomus function) will execute
     $("#id_city").change(function () {
         const url = $("#personForm").attr("data-talukas-url");  // fetching data-talukas-url="{% url 'ajax_load_talukas' %}"get the url of the `load_talukas` view
-        const cityId = $(this).val();  // fetching city_id or get the selected country ID from the HTML input
+        const cityId = $(this).val();  // fetching city_id or get the selected city ID from the HTML input
 
         $.ajax({                       // initialize an AJAX request
             url: url,                    // set the url of the request (= /persons/ajax/load-talukas/ )
@@ -44,13 +136,52 @@
             success: function (data) {   // `data` is the return of the `load_talukas` view function
                 console.log(data);
                 $("#id_taluka").html(data);  // replace the contents of the taluka input with the data that came from the server
+                
+            }
+        }); 
+      });
+    $("#id_taluka").change(function () {
+        const url = $("#personForm1").attr("data-villages-url");  // fetching data-talukas-url="{% url 'ajax_load_talukas' %}"get the url of the `load_talukas` view
+        const talukaId = $(this).val();  // fetching city_id or get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-talukas/ )
+            data: {
+                'taluka_id': talukaId       // add the city id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_talukas` view function
+                console.log(data);
+                $("#id_village").html(data);  // replace the contents of the taluka input with the data that came from the server
              
                 
             }
         });
-
-    });
+    });  
+             
+    
 </script>
+{% comment %} <form method="post" id="personForm"  data-villages-url={% url 'ajax_get_village'%}" >  <!--data-village-url="{% url 'ajax_get_village'%}"-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script> // id_city ftech id_city from model ,if we selsct any city with respect to that .change(annanomus function) will execute
+    $("#id_taluka").change(function () {
+        const url = $("#personForm").attr("data-village-url");  // fetching data-talukas-url="{% url 'ajax_load_talukas' %}"get the url of the `load_talukas` view
+        const talukaId = $(this).val();  // fetching city_id or get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-talukas/ )
+            data: {
+                'taluka_id': talukaId       // add the city id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_talukas` view function
+                console.log(data);
+                $("#id_village").html(data);  // replace the contents of the taluka input with the data that came from the server
+             
+                
+            }
+        });
+    });
+    
+</script>  {% endcomment %}
 
 </body>
 </html>

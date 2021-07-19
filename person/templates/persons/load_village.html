@@ -1,0 +1,6 @@
+<option value="">-select village-</option>
+{% for village in villages %}
+<option value="{{ village.pk }}">{{ village.name }}</option> <!--{{ taluka.pk }} this hold id and this {{ taluka.name }} name of taluka-->
+{% endfor %} 
+
+

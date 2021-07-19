@@ -1,4 +1,12 @@
-<option value="">-select taluka-</option>
-{% for taluka in talukas %}
-<option value="{{ taluka.pk }}">{{ taluka.name }}</option> <!--{{ taluka.pk }} this hold id and this {{ taluka.name }} name of taluka-->
-{% endfor %}
+<option value="">-select -</option>
+{% if taluka is taluka %}
+    {% for taluka in talukas %}
+    <option value="{{ taluka.pk }}">{{ taluka.name }}</option> <!--{{ taluka.pk }} this hold id and this {{ taluka.name }} name of taluka-->
+    {% endfor %}
+{% endif %}
+
+{% if village is village %}
+    {% for village in villages %}
+    <option value="{{ village.pk }}">{{ village.name }}</option> <!--{{ taluka.pk }} this hold id and this {{ taluka.name }} name of taluka-->
+    {% endfor %}
+{% endif %} 
