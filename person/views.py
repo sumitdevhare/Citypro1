@@ -25,7 +25,6 @@ class PersonResource(resources.ModelResource):
 
 def person_create_view(request):
     form = PersonCreationForm() # make obj of forms
-    print(form)
     if request.method == 'POST':
         form = PersonCreationForm(request.POST) # data argument which send to validatin
         if form.is_valid():
@@ -34,6 +33,19 @@ def person_create_view(request):
             return redirect('person_add')
     return render(request, 'persons/home.html', {'form': form})
 
+def delete_p(request,person_id):
+    person = Person.objects.get(pk=person_id)
+    person.delete()
+    return redirect('FDperson_add')
+
+# def person_update_view(request, person_id):
+#     # person = get_object_or_404(Person, pk=person_id)
+#     person = Person.objects.get(pk=person_id)
+#     form = PersonCreationForm(request.POST )
+#     if form.is_valid():
+#         form.save()
+#         return redirect('person_change', person_id=person_id)
+#     return render(request, 'persons/home.html', {'form': form , 'person':person})
 
 
 
@@ -48,13 +60,27 @@ def person_update_view(request, pk):
             return redirect('person_change', pk=pk)
     return render(request, 'persons/home.html', {'form': form})
 
+
 # Show Farmer data
 def Show_Farmerdata_view(request):
-    form1 = PersonCreationForm()
+    form1 = PersonCreationForm() # make obj of forms
+    if request.method == 'POST':
+        form1 = PersonCreationForm(request.POST) # data argument which send to validatin
+        if form1.is_valid():
+            form1.save()
+            # success=success(request,"Form Sent successfully")
+            return redirect('person_add')
     form = Person.objects.all()
-    print(form)
-    
     return render(request,'persons/Ftable_data.html',{'form': form,'form1':form1})
+
+
+# # Show Farmer data
+# def Show_Farmerdata_view(request):
+#     form1 = PersonCreationForm()
+#     form = Person.objects.all()
+#     print(form)
+#     print(form1)
+#     return render(request,'persons/Ftable_data.html',{'form': form,'form1':form1})
 
 
 # def Get_Talukas(request):
@@ -93,15 +119,22 @@ def venue_pdf(request):
     c = canvas.Canvas(buf,pagesize=letter,bottomup=0)
 # test obj
     textob = c.beginText()
-    tesxtob.setTextOringin(inch,inch)
+    textob.setTextOrigin(inch, inch)
     textob.setFont("Helvetica",14)
     
     #Designated Model
     venues = Person.objects.all()
     lines=[]
+    # lines = [
+    #     "line is line in this 1",
+    #     "line is line in this 2",
+    #     "line is line in this 3",
+    #     "line is line in this 4",
+        
+    # ]
 
     #loop
-    for  venue in venues:
+    for venue in venues:
         lines.append(venue.city)
         lines.append(venue.taluka)
         lines.append(venue.village)
@@ -113,16 +146,43 @@ def venue_pdf(request):
         lines.append(venue.address)
         lines.append("****************************")
 
-
     for line in lines:
-        textob.textLine(line)
-    #finish Up
-        c.drawText(textob)
-        c.showPage()
-        c.save()
-        buf.seek(0)
+        textob.textLine(lines)
+
+    c.drawText(textob)
+    c.showPage()
+    c.save()
+    buf.seek(0)
+
+    #  return something
+    return FileResponse(buf, as_attachment=True, filename='venue.pdf')
 
 
-    #return something
-    return FileResponse(buf, as_attachment=True,filename='venue.pdf')
+
+
+    #loop
+    # for  venue in venues:
+    #     lines.append(venue.city)
+    #     lines.append(venue.taluka)
+    #     lines.append(venue.village)
+    #     lines.append(venue.first_name)
+    #     lines.append(venue.middal_name)
+    #     lines.append(venue.last_name)
+    #     lines.append(venue.phone)
+    #     lines.append(venue.addhar)
+    #     lines.append(venue.address)
+    #     lines.append("****************************")
+
+
+    # for line in lines:
+    #     textob.textLine(line)
+    # #finish Up
+    #     c.drawText(textob)
+    #     c.showPage()
+    #     c.save()
+    #     buf.seek(0)
+
+
+    # #return something
+    # return FileResponse(buf, as_attachment=True,filename='venue.pdf')
 

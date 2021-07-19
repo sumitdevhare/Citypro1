@@ -8,6 +8,7 @@ urlpatterns = [
     path('FD/', views.Show_Farmerdata_view, name='FDperson_add'),
     path('API/', views.Apiget, name='get_api'),
     path('venue_pdf/', views.venue_pdf, name='venue_pdf'),
+    path('delete_p/<int:person_id>/', views.delete_p, name='delete_p'),
 
     path('ajax/load-talukas/', views.load_talukas, name='ajax_load_talukas'),
     path('ajax/load-village/', views.Get_Village, name='ajax_load_village'), # AJAX

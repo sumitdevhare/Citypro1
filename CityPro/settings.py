@@ -126,5 +126,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=[ 
 STATIC_DIR, 
 ]
-MEDIA_URL="/image/dounload/"
-MEDIA_ROOT=BASE_DIR
+MEDIA_URL='/img/'
+MEDIA_ROOT=os.path.join(BASE_DIR,'static/css/img')

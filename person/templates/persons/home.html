@@ -140,48 +140,27 @@
             }
         }); 
       });
-    $("#id_taluka").change(function () {
-        const url = $("#personForm1").attr("data-villages-url");  // fetching data-talukas-url="{% url 'ajax_load_talukas' %}"get the url of the `load_talukas` view
-        const talukaId = $(this).val();  // fetching city_id or get the selected country ID from the HTML input
-
-        $.ajax({                       // initialize an AJAX request
-            url: url,                    // set the url of the request (= /persons/ajax/load-talukas/ )
-            data: {
-                'taluka_id': talukaId       // add the city id to the GET parameters
-            },
-            success: function (data) {   // `data` is the return of the `load_talukas` view function
-                console.log(data);
-                $("#id_village").html(data);  // replace the contents of the taluka input with the data that came from the server
-             
-                
-            }
-        });
-    });  
-             
-    
+     
 </script>
-{% comment %} <form method="post" id="personForm"  data-villages-url={% url 'ajax_get_village'%}" >  <!--data-village-url="{% url 'ajax_get_village'%}"-->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script> // id_city ftech id_city from model ,if we selsct any city with respect to that .change(annanomus function) will execute
+{% comment %} <script> // id_city ftech id_city from model ,if we selsct any city with respect to that .change(annanomus function) will execute
     $("#id_taluka").change(function () {
-        const url = $("#personForm").attr("data-village-url");  // fetching data-talukas-url="{% url 'ajax_load_talukas' %}"get the url of the `load_talukas` view
-        const talukaId = $(this).val();  // fetching city_id or get the selected country ID from the HTML input
+        const url = $("#personForm1").attr("data-village-url");  // fetching data-talukas-url="{% url 'ajax_load_talukas' %}"get the url of the `load_talukas` view
+        const talukaId = $(this).val();  // fetching city_id or get the selected city ID from the HTML input
 
         $.ajax({                       // initialize an AJAX request
             url: url,                    // set the url of the request (= /persons/ajax/load-talukas/ )
             data: {
-                'taluka_id': talukaId       // add the city id to the GET parameters
+                'taluka_id': talukaId      // add the city id to the GET parameters
             },
             success: function (data) {   // `data` is the return of the `load_talukas` view function
                 console.log(data);
                 $("#id_village").html(data);  // replace the contents of the taluka input with the data that came from the server
-             
                 
             }
-        });
-    });
-    
-</script>  {% endcomment %}
+        }); 
+      });
+     
+</script> {% endcomment %}
 
 </body>
 </html>

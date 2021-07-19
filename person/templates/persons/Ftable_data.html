@@ -47,10 +47,10 @@
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="">Purches Module<span class="sr-only">(current)</span></a>
-       {% comment %} </li>
+       </li>
         <li class="nav-item active">
-        <a class="nav-link" href="{% url 'venue_pdf ' %}">PDF_DOWN<span class="sr-only">(current)</span></a>
-      </li>  {% endcomment %}
+        <a class="nav-link" href="">PDF_DOWN<span class="sr-only">(current)</span></a>
+      </li>  
 
       <li class="nav-item active">
         <a class="nav-link" href="">Sale Module<span class="sr-only">(current)</span></a>
@@ -70,7 +70,7 @@
 {% block content %}
 <div class="container-fluied">
 <div class="p-4 m-4">
-<div class="container col-lg-10 mx-auto border rounded pt-4 my-4 mx-4">
+<div class="container col-lg-10 mx-auto border rounded pt-4 my-4 mx-4" method="post" id="personForm" data-talukas-url="{% url 'ajax_load_talukas' %}">
     <table class="table table-borderedless">
     <thead class="bg-success">
         <tr>
@@ -84,14 +84,16 @@
         <th scope="row">Ditric Name </th>
         <th scope="row">Taluka Name </th>
         <th scope="row">Village Name </th>
-        <th scope="row">Farmer Count </th>
+        
         <th scope="row"> </th>
         <div class="table-group px-8">
           <tr>
+        
          <td>{{form1.city}}</td>
         <td>{{form1.taluka}}</td>
         <td>{{form1.village}}</td>
         <td></td>  
+          
         <td><input class="btn btn-warning" type="reset" value="Clear"></td>                 
         </tr>                     
                </div>
@@ -115,7 +117,8 @@
         <th scope="col">Addhar.No.</th>
         <th scope="col">Address</th>
         <th scope="col">Farmer_Photo</th>
-        <th scope="col">Action</th>
+        <th scope="col">DELETE</th>
+        <th scope="col">EDIT</th>
         </tr>
     </thead>
     <tbody>
@@ -129,6 +132,8 @@
         <td>{{item.addhar}}</td>
         <td>{{item.address}}</td>
         <td>{{item.image}}</td>
+        <td onclick="window.location='http://127.0.0.1:8000/persons/delete_p/{{item.id}}/';" style='cursor: pointer;' class="text-danger">Deete</td>
+        
         <td onclick="window.location='http://127.0.0.1:8000/persons/{{item.id}}/';" style='cursor: pointer;' class="text-primary">Edit</td>
         </tr>
         {% endfor %}
@@ -147,6 +152,29 @@
 
 
 
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script> // id_city ftech id_city from model ,if we selsct any city with respect to that .change(annanomus function) will execute
+    $("#id_city").change(function () {
+        const url = $("#personForm").attr("data-talukas-url");  // fetching data-talukas-url="{% url 'ajax_load_talukas' %}"get the url of the `load_talukas` view
+        const cityId = $(this).val();  // fetching city_id or get the selected city ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-talukas/ )
+            data: {
+                'city_id': cityId       // add the city id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_talukas` view function
+                console.log(data);
+                $("#id_taluka").html(data);  // replace the contents of the taluka input with the data that came from the server
+                
+            }
+        }); 
+      });
+ 
+             
+    
+</script>
 
 
 </body>

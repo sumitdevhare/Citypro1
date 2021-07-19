@@ -35,7 +35,7 @@ class Person(models.Model):
     phone= models.CharField(max_length=15,null=True)
     addhar= models.CharField(max_length=15,null=True)
     address= models.CharField(max_length=50,null=True)
-    image = models.ImageField(upload_to="person/static/css/img",blank=True, null=True)
+    image = models.ImageField(upload_to="static/css/img",blank=True, null=True)
     # registration= models.CharField(max_length=15,null=True)
 
     def __str__(self):
